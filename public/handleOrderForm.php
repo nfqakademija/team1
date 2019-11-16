@@ -1,42 +1,51 @@
 <?php
     if(isset($_POST['submit'])) {
-        if (strlen($_POST['make']) < 45 && strlen($_POST['model']) < 45) {
+        if (strlen($_POST['make']) < 45 && strlen($_POST['model']) < 45 && strlen($_POST['ecu']) < 75) {
 
-            $fileName = $_FILES['file']['name'];
-            $fileTmpName = $_FILES['file']['tmp_name'];
-            $fileError = $_FILES['file']['error'];
-            $fileType = $_FILES['file']['type'];
+            $filters = array(
+                "power"=> FILTER_VALIDATE_INT,
+                "displacement"=> FILTER_VALIDATE_INT,
+            );
+            $filtered = filter_input_array(INPUT_POST, $filters);
 
-            $fileExt = explode('.',$fileName);
-            $theFileExt = strtolower(end($fileExt));
+            if($filtered['power'] != '' && $filtered['displacement'] != '') {
+                $fileName = $_FILES['file']['name'];
+                $fileTmpName = $_FILES['file']['tmp_name'];
+                $fileError = $_FILES['file']['error'];
+                $fileType = $_FILES['file']['type'];
 
-            $allow = array('txt', 'ecu');
+                $fileExt = explode('.', $fileName);
+                $theFileExt = strtolower(end($fileExt));
 
-            if(in_array($theFileExt, $allow)){
-                if($fileError === 0) {
-                    if (strlen($fileName) < 45){
-                        $newFileName = hash('ripemd160', $fileName);
-                        $location = 'uploadedFiles/' . $newFileName;
-                        move_uploaded_file($fileTmpName, $location);
-                        $db = mysqli_connect("127.0.0.1", "root", "", "AutoChip");
-                        $sql = "INSERT INTO vehicle_ecu_file (filename, hash)
-                                VALUES ('$fileName', '$newFileName' )";
+                $allow = array('txt', 'ecu');
 
-                        if (mysqli_query($db, $sql)) {
-                            header("Location: orderForm.html");
-                        } else {
-                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($db);
+                if (in_array($theFileExt, $allow)) {
+                    if ($fileError === 0) {
+                        if (strlen($fileName) < 45) {
+                            $newFileName = hash('ripemd160', $fileName);
+                            $location = 'uploadedFiles/' . $newFileName;
+                            move_uploaded_file($fileTmpName, $location);
+                            //$db = mysqli_connect("127.0.0.1", "root", "", "AutoChip");
+                            /*$sql = "INSERT INTO vehicle_ecu_file (filename, hash)
+                                    VALUES ('$fileName', '$newFileName' )";
+
+                            if (mysqli_query($db, $sql)) {
+                                header("Location: orderForm.html");
+                            } else {
+                                echo "ERROR: Could not able to execute $sql. " . mysqli_error($db);
+                            }
+                            */
                         }
+                    } else {
+                        echo 'Something went wrong! (error occurred)';
                     }
-                }
-                else{
-                    echo 'Something went wrong! (error occurred)';
+                } else {
+                    echo "Can't upload file with that type.";
                 }
             }
-            else{
-                echo "Can't upload file with that type.";
+            else {
+                echo "Something went wrong!";
             }
-
         } else {
             echo "Something went wrong!";
         }
