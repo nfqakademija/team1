@@ -1,9 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import App from './app';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import CardGrid from "./components/services/CardGrid";
+import OrderForm from "./components/orders/OrderForm";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
-ReactDOM.render (
+const App = () => {
+  return (
     <Router>
-        <App />
-    </Router>, document.getElementById('root'));
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <div className="App">
+          <Navbar />
+          <CardGrid />
+          <OrderForm />
+        </div>
+      </MuiPickersUtilsProvider>
+    </Router>
+  );
+};
+
+export default App;

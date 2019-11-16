@@ -1,16 +1,16 @@
-import { GET_CATEGORIES, GET_CATEGORY_SERVICES } from "../types";
+import { GET_CATEGORIES, GET_CATEGORY } from "../types";
 
 export default (state, action) => {
   switch (action.type) {
     case GET_CATEGORIES:
       return {
         ...state,
-        categories
+        categories: action.payload
       };
-    case GET_CATEGORY_SERVICES:
+    case GET_CATEGORY:
       return {
         ...state,
-        services
+        category: action.payload
       };
     default:
       return state;
