@@ -39,7 +39,7 @@ const ServicesState = props => {
         categories: state.categories,
         services: state.services,
         loading: state.loading,
-        categoty: state.category,
+        category: state.category,
         getCategories,
         getCategory
       }}
