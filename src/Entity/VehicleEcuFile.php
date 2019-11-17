@@ -101,7 +101,7 @@ class VehicleEcuFile
     public function setType(string $type): self
     {
 
-        if(!in_array($type, array(self::TYPE_NEW, self::TYPE_MODIFIED))) {
+        if (!in_array($type, array(self::TYPE_NEW, self::TYPE_MODIFIED))) {
             throw new InvalidArgumentException("Invalid type");
         }
         $this->type = $type;
