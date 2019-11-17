@@ -24,9 +24,9 @@ class OrderStatusLog
     /**
      * @var string|null
      *
-     * @ORM\Column(name="previous_state", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="previous_state", type="string", length=45, nullable=true)
      */
-    private $previousState = 'NULL';
+    private $previousState;
 
     /**
      * @var string
@@ -38,9 +38,9 @@ class OrderStatusLog
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="date", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
-    private $date = 'NULL';
+    private $date;
 
     /**
      * @var \Order

@@ -31,16 +31,16 @@ class Category
     /**
      * @var string|null
      *
-     * @ORM\Column(name="picture", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      */
-    private $picture = 'NULL';
+    private $picture;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="summary", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="summary", type="text", length=65535, nullable=true)
      */
-    private $summary = 'NULL';
+    private $summary;
 
     public function getIdCategory(): ?int
     {

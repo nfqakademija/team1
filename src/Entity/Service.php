@@ -40,9 +40,9 @@ class Service
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var \Category

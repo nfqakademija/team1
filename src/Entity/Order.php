@@ -33,9 +33,9 @@ class Order
     /**
      * @var string|null
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
      */
-    private $comment = 'NULL';
+    private $comment;
 
     /**
      * @var \OrderVehicleData
@@ -65,11 +65,27 @@ class Order
     private $fkService;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="VehicleEcuFile", inversedBy="fkOrder")
+     * @ORM\JoinTable(name="order_to_vehicle_ecu_file",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="fk_order", referencedColumnName="id_order")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="fk_vehicle_ecu_file", referencedColumnName="id_vehicle_ecu_file")
+     *   }
+     * )
+     */
+    private $fkVehicleEcuFile;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->fkService = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fkVehicleEcuFile = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getIdOrder(): ?int
@@ -148,6 +164,32 @@ class Order
         if ($this->fkService->contains($fkService)) {
             $this->fkService->removeElement($fkService);
             $fkService->removeFkOrder($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VehicleEcuFile[]
+     */
+    public function getFkVehicleEcuFile(): Collection
+    {
+        return $this->fkVehicleEcuFile;
+    }
+
+    public function addFkVehicleEcuFile(VehicleEcuFile $fkVehicleEcuFile): self
+    {
+        if (!$this->fkVehicleEcuFile->contains($fkVehicleEcuFile)) {
+            $this->fkVehicleEcuFile[] = $fkVehicleEcuFile;
+        }
+
+        return $this;
+    }
+
+    public function removeFkVehicleEcuFile(VehicleEcuFile $fkVehicleEcuFile): self
+    {
+        if ($this->fkVehicleEcuFile->contains($fkVehicleEcuFile)) {
+            $this->fkVehicleEcuFile->removeElement($fkVehicleEcuFile);
         }
 
         return $this;

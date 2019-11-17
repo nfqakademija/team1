@@ -24,30 +24,30 @@ class OrderVehicleData
     /**
      * @var int|null
      *
-     * @ORM\Column(name="year", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="year", type="integer", nullable=true)
      */
-    private $year = 'NULL';
+    private $year;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="power", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="power", type="integer", nullable=true)
      */
-    private $power = 'NULL';
+    private $power;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="displacement", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="displacement", type="integer", nullable=true)
      */
-    private $displacement = 'NULL';
+    private $displacement;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ecu_model", type="string", length=75, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ecu_model", type="string", length=75, nullable=true)
      */
-    private $ecuModel = 'NULL';
+    private $ecuModel;
 
     /**
      * @var \VehicleModel

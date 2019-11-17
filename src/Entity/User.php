@@ -38,9 +38,9 @@ class User
     /**
      * @var string|null
      *
-     * @ORM\Column(name="confirmation_hash", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="confirmation_hash", type="string", length=255, nullable=true)
      */
-    private $confirmationHash = 'NULL';
+    private $confirmationHash;
 
     /**
      * @var bool|null
@@ -52,9 +52,9 @@ class User
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="last_login", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
-    private $lastLogin = 'NULL';
+    private $lastLogin;
 
     /**
      * @var bool
