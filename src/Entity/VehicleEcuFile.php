@@ -61,6 +61,7 @@ class VehicleEcuFile
     public function __construct()
     {
         $this->fkOrder = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->type = self::TYPE_NEW;
     }
 
     public function getIdVehicleEcuFile(): ?int
