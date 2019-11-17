@@ -128,6 +128,4 @@ class OrderStatusLog
 
         return $this;
     }
-
-
 }

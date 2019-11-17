@@ -155,5 +155,4 @@ class Service
 
         return $this;
     }
-
 }

@@ -82,6 +82,4 @@ class Category
 
         return $this;
     }
-
-
 }

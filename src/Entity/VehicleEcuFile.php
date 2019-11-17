@@ -136,5 +136,4 @@ class VehicleEcuFile
 
         return $this;
     }
-
 }

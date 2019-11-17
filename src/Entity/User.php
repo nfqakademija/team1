@@ -139,6 +139,4 @@ class User
 
         return $this;
     }
-
-
 }
