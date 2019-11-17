@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
@@ -17,13 +19,17 @@ class OrderController extends AbstractController
 {
     /**
      * @Route("/order", name="order")
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
         $validator = Validation::createValidator();
 
-        $content=trim(file_get_contents("php://input"));
-        $input = json_decode($content, true);
+        //$content=trim(file_get_contents("php://input"));
+        //$input = json_decode($content, true);
+
+        $input = json_decode($request->getContent(),true);
 
         $constraint = new Assert\Collection([
             // the keys correspond to the keys in the input array
@@ -88,5 +94,9 @@ class OrderController extends AbstractController
         return $this->render('order/index.html.twig', [
             'controller_name' => $violations,
         ]);
+    }
+
+    public function submit(){
+
     }
 }
