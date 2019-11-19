@@ -22,7 +22,7 @@ class OrderController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function submit(Request $request)
     {
         $validator = Validation::createValidator();
 
@@ -96,7 +96,4 @@ class OrderController extends AbstractController
         ]);
     }
 
-    public function submit(){
-
-    }
 }
