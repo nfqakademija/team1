@@ -1,0 +1,1 @@
+INSERT INTO symfony.migration_versions (version, executed_at) VALUES ('20191117144206', '2019-11-17 14:42:12');
