@@ -75,10 +75,9 @@ class OrderController extends AbstractController
             $order = new Order();
             $orderVehicle = new OrderVehicleData();
             $orderState = new OrderState();
-            $user=new User();
             $user=$this->getDoctrine()->getRepository(User::class)->find(1);
 
-            $vehicleMake = $this->getDoctrine()->getRepository(VehicleMake::class)->findOneBy(['make' => $input['make']]);
+            //$vehicleMake = $this->getDoctrine()->getRepository(VehicleMake::class)->findOneBy(['make' => $input['make']]);
             $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class) ->findOneBy(['model' => $input['model']]);
 
             $orderVehicle->setYear($input['year']);
