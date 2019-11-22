@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Order
  *
- * @ORM\Table(name="order", uniqueConstraints={@ORM\UniqueConstraint(name="id_order_UNIQUE", columns={"id_order"})}, indexes={@ORM\Index(name="fk_order_order_vehicle_data1_idx", columns={"fk_order_vehicle_data"}), @ORM\Index(name="fk_order_user1_idx", columns={"fk_user"})})
+ * @ORM\Table(name="`order`", uniqueConstraints={@ORM\UniqueConstraint(name="id_order_UNIQUE", columns={"id_order"})}, indexes={@ORM\Index(name="fk_order_order_vehicle_data1_idx", columns={"fk_order_vehicle_data"}), @ORM\Index(name="fk_order_user1_idx", columns={"fk_user"})})
  * @ORM\Entity
  */
 class Order
