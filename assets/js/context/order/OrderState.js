@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import axios from "axios";
-import ServicesContext from "./orderContext";
-import ServicesReducer from "./orderReducer";
+import OrderContext from "./orderContext";
+import orderReducer from "./orderReducer";
 import { GET_CATEGORIES, GET_CATEGORY } from "../types";
 
 const OrderState = props => {
@@ -11,40 +11,44 @@ const OrderState = props => {
     price: ""
   };
 
-  const [state, dispatch] = useReducer(ServicesReducer, initialState);
+  const [state, dispatch] = useReducer(orderReducer, initialState);
 
-  //Get all categories
-  const getCategories = async () => {
-    const res = await axios.get("/api/categories");
-    dispatch({
-      type: GET_CATEGORIES,
-      payload: res.categories
-    });
+  //Submit Order
+  const submitOrder = async () => {
+    console.log("Submit Order");
   };
 
-  //Get all data of a specific category
-  const getCategory = async id => {
-    const res = await axios.get(`/api/categories/${id}`);
-    dispatch({
-      type: GET_CATEGORY,
-      payload: res.categoy
-    });
+  //Add service to selected
+  const addService = async id => {
+    console.log("Add Service");
   };
-  //Send selected categories and services
-
+  //Remove service from selected
+  const removeService = async id => {
+    console.log("Add Service");
+  };
+  //Get makes
+  const getMakes = async id => {
+    console.log("Add Service");
+  };
+  //Get models
+  const getModels = async id => {
+    console.log("Add Service");
+  };
   return (
-    <ServicesContext.Provider
+    <OrderContext.Provider
       value={{
-        categories: state.categories,
-        services: state.services,
-        loading: state.loading,
-        category: state.category,
-        getCategories,
-        getCategory
+        order: state.order,
+        selectedServices: state.selectedServices,
+        price: state.price,
+        submitOrder,
+        addService,
+        removeService,
+        getMakes,
+        getModels
       }}
     >
       {props.children}
-    </ServicesContext.Provider>
+    </OrderContext.Provider>
   );
 };
 

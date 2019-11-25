@@ -315,6 +315,10 @@ textarea {
   font-size: 1.2rem;
   border: 1px solid #ccc;
 }
+select,
+option {
+  background-color: #fff;
+}
 
 input[type="submit"],
 button {

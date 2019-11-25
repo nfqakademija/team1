@@ -9,7 +9,7 @@ import Services from "./components/pages/Services";
 
 import ServiceState from "./context/services/ServicesState";
 import AlertState from "./context/alert/AlertState";
-import OrderState from "./context/alert/OrderState";
+import OrderState from "./context/order/OrderState";
 import "./components/App.css";
 
 const App = () => {
