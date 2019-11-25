@@ -19,9 +19,6 @@ const useStyles = makeStyles(theme => ({
 export default function CheckboxesGroup(services) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    gilad: true,
-    jason: false,
-    antoine: false,
     array: [
       { name: "ServiceA", price: "20.21" },
       { name: "ServiceB", price: "45.13" },
@@ -33,32 +30,30 @@ export default function CheckboxesGroup(services) {
     setState({ ...state, [name]: event.target.checked });
   };
 
-  const { gilad, jason, antoine } = state;
-
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">Choose a service to order</FormLabel>
-        <FormGroup>
+        <div>
           {state.array.map(service => (
             <div>
               <FormControlLabel
+                style={{ marginBottom: "0rem" }}
                 control={<Checkbox value={service.name} />}
-                label={service.name}
               />
-              <p
+              {service.name}
+              <div
                 style={{
-                  display: "inline",
-                  textAlign: "right",
-                  alignItems: "center",
-                  justifyContent: "right"
+                  marginLeft: "16px",
+                  marginBottom: "0.5rem",
+                  display: "inline-flex"
                 }}
               >
-                {service.price} EUR
-              </p>
+                {service.price} Eur
+              </div>
             </div>
           ))}
-        </FormGroup>
+        </div>
       </FormControl>
     </div>
   );
