@@ -6,3 +6,5 @@ export const GET_MODELS = "GET_MODELS";
 export const GET_MAKES = "GET_MAKES";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const CALC_PRICE = "CALC_PRICE";
+export const ADD_SERVICE = "ADD_SERVICE";
+export const REMOVE_SERVICE = "REMOVE_SERVICE";

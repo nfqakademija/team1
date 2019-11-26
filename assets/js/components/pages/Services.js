@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import CardGrid from "../services/CardGrid";
 import OrderForm from "../orders/OrderForm";
+import OrderSum from "../orders/OrderSum";
 
 const Services = () => {
   return (
@@ -10,7 +11,9 @@ const Services = () => {
         <div>
           <OrderForm />
         </div>
-        <div></div>
+        <div>
+          <OrderSum />
+        </div>
       </div>
     </div>
   );
