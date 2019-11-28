@@ -13,7 +13,9 @@ easy_admin:
           - { property: 'idCategory', label: 'Id' }
           - { property: 'name', label: 'Name' }
           - { property: 'summary', label: 'Summary' }
+          - { property: 'picture', type: 'image', base_path: '%app.path.category_pictures%' }
       form:
         fields:
-          - { property: 'name'}
-          - { property: 'summary'}
+          - { property: 'name' }
+          - { property: 'summary' }
+          - { property: 'pictureFile', type: Vich\UploaderBundle\Form\Type\VichImageType }

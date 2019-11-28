@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Category
  *
  * @ORM\Table(name="category", uniqueConstraints={@ORM\UniqueConstraint(name="Id_Category_UNIQUE", columns={"id_category"})})
  * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Category
 {
@@ -36,11 +39,31 @@ class Category
     private $picture;
 
     /**
+     * @Vich\UploadableField(mapping="category_pictures", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="summary", type="text", length=65535, nullable=true)
      */
     private $summary;
+
+    public function setPictureFile(File $picture = null): void
+    {
+        $this->pictureFile = $picture;
+
+        if ($picture) {
+            $this->setPicture($picture->getFilename());
+        }
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
 
     public function getIdCategory(): ?int
     {
