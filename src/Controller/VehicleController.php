@@ -18,8 +18,7 @@ class VehicleController extends AbstractController
         $makes = $this->getDoctrine()
             ->getRepository(VehicleMake::class)
             ->findAll();
-        if(!$makes)
-        {
+        if (!$makes) {
             $response = new JsonResponse(['error' => 'No makes could be found.']);
 
             $response->setStatusCode(404);
@@ -27,8 +26,7 @@ class VehicleController extends AbstractController
         }
 
         $makesArr = [];
-        foreach($makes as $make)
-        {
+        foreach ($makes as $make) {
             $makesArr[] = [
                 'id' => $make->getIdVehicleMake(),
                 'make' => $make->getMake(),
@@ -51,8 +49,7 @@ class VehicleController extends AbstractController
             ->getRepository(VehicleModel::class)
             ->findBy(['fkVehicleMake' => $make_id]);
 
-        if(!$models)
-        {
+        if (!$models) {
             $response = new JsonResponse(['error' => 'No models could be found by this make.']);
 
             $response->setStatusCode(404);
@@ -60,8 +57,7 @@ class VehicleController extends AbstractController
         }
 
         $modelsArr = [];
-        foreach($models as $model)
-        {
+        foreach ($models as $model) {
             $modelsArr[] = [
                 'id' => $model->getIdVehicleModel(),
                 'model' => $model->getModel(),
@@ -73,6 +69,5 @@ class VehicleController extends AbstractController
         ];
 
         return new JsonResponse($response);
-
     }
 }
