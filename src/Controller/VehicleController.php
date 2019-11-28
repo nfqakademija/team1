@@ -19,25 +19,18 @@ class VehicleController extends AbstractController
             ->getRepository(VehicleMake::class)
             ->findAll();
         if (!$makes) {
-            $response = new JsonResponse(['error' => 'No makes could be found.']);
-
-            $response->setStatusCode(404);
-            return $response;
+            return $this->json(['error' => 'No makes could be found.'], 404);
         }
 
-        $makesArr = [];
+        $makes_arr = [];
         foreach ($makes as $make) {
-            $makesArr[] = [
+            $makes_arr[] = [
                 'id' => $make->getIdVehicleMake(),
                 'make' => $make->getMake(),
             ];
         }
 
-        $response = [
-            'makes' => $makesArr,
-        ];
-
-        return new JsonResponse($response);
+        return $this->json(['makes' => $makes_arr], 200);
     }
 
     /**
@@ -50,24 +43,17 @@ class VehicleController extends AbstractController
             ->findBy(['fkVehicleMake' => $make_id]);
 
         if (!$models) {
-            $response = new JsonResponse(['error' => 'No models could be found by this make.']);
-
-            $response->setStatusCode(404);
-            return $response;
+            return $this->json(['error' => 'No models could be found by this make.', 404]);
         }
 
-        $modelsArr = [];
+        $models_arr = [];
         foreach ($models as $model) {
-            $modelsArr[] = [
+            $models_arr[] = [
                 'id' => $model->getIdVehicleModel(),
                 'model' => $model->getModel(),
             ];
         }
 
-        $response = [
-            'models' => $modelsArr,
-        ];
-
-        return new JsonResponse($response);
+        return $this->json(['models' => $models_arr], 200);
     }
 }
