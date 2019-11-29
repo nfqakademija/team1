@@ -50,7 +50,7 @@ export default function RecipeReviewCard({ category }) {
       <CardMedia
         className={classes.media}
         style={{ height: 0, paddingTop: "56%" }}
-        image={require("../../ecu.jpg")}
+        image={require("../../../img/ecu.jpg")}
       ></CardMedia>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
