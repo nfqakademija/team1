@@ -26,19 +26,15 @@ class OrderController extends AbstractController
      */
     public function submit(Request $request)
     {
+        $content = $request->request->all();
 
-        $content = $request->getContent();
-        //$content = $request->request->all();
-        //var_dump($content);
-
-        $input = json_decode($content,true);
-        $violations = $this->validate($input);
+        $violations = $this->validate($content);
 
         if (0 !== count($violations)) {
             $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
         }
         else{
-            $this->handleOrder($input);
+            $this->handleOrder($content);
             $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
         }
         return $response;
