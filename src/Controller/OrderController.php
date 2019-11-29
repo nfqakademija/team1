@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-
-
+use App\Entity\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,32 +15,41 @@ use App\Entity\OrderState;
 use App\Entity\OrderVehicleData;
 use App\Entity\VehicleMake;
 use App\Entity\VehicleModel;
-use App\Entity\Category;
 use App\Entity\User;
 
 class OrderController extends AbstractController
 {
-
-
     /**
-     * @Route("/order", name="order")
+     * @Route("/order", name="order", methods={"POST"})
      * @param Request $request
      * @return Response
      */
     public function submit(Request $request)
     {
 
-        $message = "order failed";
+        $content = $request->getContent();
+        //$content = $request->request->all();
+        //var_dump($content);
+
+        $input = json_decode($content,true);
+        $violations = $this->validate($input);
+
+        if (0 !== count($violations)) {
+            $response = $this->json($violations, Response::HTTP_OK);
+        }
+        else{
+            $this->handleOrder($input);
+            $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
+        }
+        return $response;
+    }
+
+    private function validate($input){
+
         $validator = Validation::createValidator();
-
-        //$content=trim(file_get_contents("php://input"));
-        //$input = json_decode($content, true);
-
-        $input = json_decode($request->getContent(),true);
-
         $constraint = new Assert\Collection([
             // the keys correspond to the keys in the input array
-            'price' => new Assert\Type('float'),
+            'services' => new Assert\Type('array'),
             'year' => new Assert\Type('int'),
             'make' => [
                 new Assert\Length(['max' => 45]),
@@ -62,54 +70,47 @@ class OrderController extends AbstractController
         ]);
 
         $violations = $validator->validate($input, $constraint);
+        return $violations;
+    }
+    private function handleOrder($input){
 
-        if (0 !== count($violations)) {
-            // there are errors, now you can show them
-            foreach ($violations as $violation) {
-                echo $violation->getMessage().'<br>';
-            }
-        }
-        else{
+        $em = $this->getDoctrine()->getManager();
+        $order = new Order();
+        $orderVehicle = new OrderVehicleData();
+        $orderState = new OrderState();
+        $repo = $this->getDoctrine()->getRepository(Service::class);
+        $user=$this->getDoctrine()->getRepository(User::class)->find(1);
+        $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class) ->findOneBy(['model' => $input['model']]);
 
-            $em = $this->getDoctrine()->getManager();
-            $order = new Order();
-            $orderVehicle = new OrderVehicleData();
-            $orderState = new OrderState();
-            $user=$this->getDoctrine()->getRepository(User::class)->find(1);
 
-            //$vehicleMake = $this->getDoctrine()->getRepository(VehicleMake::class)->findOneBy(['make' => $input['make']]);
-            $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class) ->findOneBy(['model' => $input['model']]);
 
-            $orderVehicle->setYear($input['year']);
-            $orderVehicle->setPower($input['power']);
-            $orderVehicle->setDisplacement($input['year']);
-            $orderVehicle->setEcuModel($input['ecu']);
-            $orderVehicle->setFkVehicleModel($vehicleModel);
-            $em->persist($orderVehicle);
+        $priceSum=0;
+        foreach ($input['services'] as $eachService) {
 
-            $em->flush();
-
-            $order->setPriceTotal($input['price']);
-            $order->setComment($input['comment']) ;
-            $order->setFkOrderVehicleData($orderVehicle);
-            $order->setFkUser($user);
-            $em->persist($order);
-
-            $em->flush();
-
-            $orderState->setState('nemodifikuotas');
-            $orderState->setFkOrder($order);
-            $em->persist($orderState);
-
-            $em->flush();
-
-            $message="order successful";
-
+            $found = $repo->find($eachService['id']);
+            $priceSum=$priceSum+$found->getPrice();
         }
 
-        return $this->render('order/index.html.twig', [
-            'message' => $message
-        ]);
+        $orderVehicle->setYear($input['year']);
+        $orderVehicle->setPower($input['power']);
+        $orderVehicle->setDisplacement($input['year']);
+        $orderVehicle->setEcuModel($input['ecu']);
+        $orderVehicle->setFkVehicleModel($vehicleModel);
+        $em->persist($orderVehicle);
+
+        $order->setPriceTotal($priceSum);
+        $order->setComment($input['comment']) ;
+        $order->setFkOrderVehicleData($orderVehicle);
+        $order->setFkUser($user);
+        $em->persist($order);
+
+        $orderState->setState('nemodifikuotas');
+        $orderState->setFkOrder($order);
+        $em->persist($orderState);
+
+        $em->flush();
+
+
     }
 
 }
