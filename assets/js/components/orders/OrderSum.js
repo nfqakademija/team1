@@ -11,23 +11,17 @@ function OrderSum() {
     <div>
       {selectedServices.length > 0 ? (
         selectedServices.map(service => (
-          <div>
+          <div key={service.id} className="mx-2">
             <h5>{service.name}</h5>
-            <div
-              style={{
-                marginLeft: "16px",
-                marginBottom: "0.5rem",
-                display: "inline-flex"
-              }}
-            >
-              {service.price} Eur
-            </div>
+            <p>{service.price} Eur</p>
           </div>
         ))
       ) : (
         <div></div>
       )}
-      <h4>Full price of your order is {price} Eur</h4>
+      <h3 className="text-center">
+        Full price of your order is {Number(price).toFixed(2)} Eur
+      </h3>
     </div>
   );
 }

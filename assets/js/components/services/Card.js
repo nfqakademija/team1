@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CheckboxesGroup from "./CheckboxesGroup";
-import ServicesContext from "../../context/services/servicesContext";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -37,15 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function RecipeReviewCard(id) {
-  const servicesContext = useContext(ServicesContext);
-  /*const { category, getCategory } = servicesContext;
-
-  useEffect(() => {
-    getCategory(this.props.id);
-    //eslint-disable-next-line
-  }, []);*/
-
+export default function RecipeReviewCard({ category }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -55,16 +46,15 @@ export default function RecipeReviewCard(id) {
 
   return (
     <Card className={classes.card}>
-      <CardHeader title="ECU" />
+      <CardHeader title={category.name} />
       <CardMedia
         className={classes.media}
         style={{ height: 0, paddingTop: "56%" }}
-        image={require("../../../img/ecu.jpg")}
+        image={require("../../ecu.jpg")}
       ></CardMedia>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Tuning your ECU is a great way to achieve more performance or fuel
-          economy!
+          {category.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -81,9 +71,7 @@ export default function RecipeReviewCard(id) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>
-            <CheckboxesGroup />
-          </Typography>
+          <CheckboxesGroup categoryID={category.id} />
         </CardContent>
       </Collapse>
     </Card>

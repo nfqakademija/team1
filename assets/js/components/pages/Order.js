@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
+import React from "react";
 import CardGrid from "../services/CardGrid";
 import OrderForm from "../orders/OrderForm";
 import OrderSum from "../orders/OrderSum";
 
-const Services = () => {
+const Order = () => {
   return (
-    <div>
+    <div className="container">
       <CardGrid />
-      <div className="grid-2 my-2">
+      <div className="grid-2 my-3">
         <div>
           <OrderForm />
         </div>
-        <div>
+        <div className="my-3">
           <OrderSum />
         </div>
       </div>
@@ -19,4 +19,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Order;
