@@ -20,7 +20,6 @@ use App\Entity\User;
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/order", name="order", methods={"POST"})
      * @param Request $request
      * @return Response
      */
@@ -32,15 +31,15 @@ class OrderController extends AbstractController
 
         if (0 !== count($violations)) {
             $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
-        }
-        else{
+        } else {
             $this->handleOrder($content);
             $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
         }
         return $response;
     }
 
-    private function validate($input){
+    private function validate(array $input): array
+    {
 
         $validator = Validation::createValidator();
         $constraint = new Assert\Collection([
@@ -66,25 +65,27 @@ class OrderController extends AbstractController
         ]);
 
         $violations = $validator->validate($input, $constraint);
+
         return $violations;
     }
-    private function handleOrder($input){
+
+    private function handleOrder(array $input)
+    {
 
         $em = $this->getDoctrine()->getManager();
         $order = new Order();
         $orderVehicle = new OrderVehicleData();
         $orderState = new OrderState();
         $repo = $this->getDoctrine()->getRepository(Service::class);
-        $user=$this->getDoctrine()->getRepository(User::class)->find(1);
-        $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class) ->findOneBy(['model' => $input['model']]);
+        $user = $this->getDoctrine()->getRepository(User::class)->find(1);
+        $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class)->findOneBy(['model' => $input['model']]);
 
 
-
-        $priceSum=0;
+        $priceSum = 0;
         foreach ($input['services'] as $eachService) {
 
             $found = $repo->find($eachService['id']);
-            $priceSum=$priceSum+$found->getPrice();
+            $priceSum = $priceSum + $found->getPrice();
         }
 
         $orderVehicle->setYear($input['year']);
@@ -95,7 +96,7 @@ class OrderController extends AbstractController
         $em->persist($orderVehicle);
 
         $order->setPriceTotal($priceSum);
-        $order->setComment($input['comment']) ;
+        $order->setComment($input['comment']);
         $order->setFkOrderVehicleData($orderVehicle);
         $order->setFkUser($user);
         $em->persist($order);
