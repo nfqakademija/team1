@@ -35,7 +35,7 @@ class OrderController extends AbstractController
         $violations = $this->validate($input);
 
         if (0 !== count($violations)) {
-            $response = $this->json($violations, Response::HTTP_OK);
+            $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
         }
         else{
             $this->handleOrder($input);
