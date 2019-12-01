@@ -13,7 +13,7 @@ export default (state, action) => {
     case GET_CATEGORIES:
       return {
         ...state,
-        categories: state.categories
+        categories: action.payload.categories
       };
     case GET_MODELS:
       return {
@@ -28,9 +28,7 @@ export default (state, action) => {
     case GET_SERVICES:
       return {
         ...state,
-        services: state.categories.find(
-          category => category.id === action.payload
-        ).services
+        services: action.payload.services
       };
     case ADD_SERVICE:
       return {

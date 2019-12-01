@@ -74,27 +74,32 @@ const OrderState = props => {
         "Content-Type": "application/json"
       }
     };
+    orderData.services = state.selectedServices;
+    //test
+    console.log(orderData);
     try {
       const res = await axios.post("/api/order", orderData, config);
-      //If everything is ok
-      /*dispatch({
-        type: SUCCESS,
-        payload: res.data
-      });*/
     } catch (error) {
-      /*dispatch({
-        type: FAIL,
-        payload: error.response.data.msg
-      });*/
+      console.log(error.message);
     }
   };
   //Get Categories
   const getCategories = async () => {
-    dispatch({ type: GET_CATEGORIES });
+    try {
+      const res = await axios.get("/api/services");
+      dispatch({ type: GET_CATEGORIES, payload: res.data });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   //Get Services
   const getServices = async categoryID => {
-    dispatch({ type: GET_SERVICES, payload: categoryID });
+    try {
+      const res = await axios.get(`/api/services/${categoryID}`);
+      dispatch({ type: GET_SERVICES, payload: res.data });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   //Add service to selected
   const addService = service => {
