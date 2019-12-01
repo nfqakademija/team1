@@ -93,12 +93,7 @@ const OrderState = props => {
   };
   //Get Services
   const getServices = async categoryID => {
-    try {
-      const res = await axios.get(`/services/${categoryID}`);
-      dispatch({ type: GET_SERVICES, payload: res.data });
-    } catch (error) {
-      console.log(error.message);
-    }
+    dispatch({ type: GET_SERVICES, payload: categoryID });
   };
   //Add service to selected
   const addService = service => {

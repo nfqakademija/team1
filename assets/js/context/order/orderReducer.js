@@ -27,7 +27,9 @@ export default (state, action) => {
     case GET_SERVICES:
       return {
         ...state,
-        services: action.payload.services
+        services: action.payload.categories.find(
+          category => category.id === action.payload
+        ).services
       };
     case ADD_SERVICE:
       return {
