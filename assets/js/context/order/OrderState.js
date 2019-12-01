@@ -85,7 +85,7 @@ const OrderState = props => {
   //Get Categories
   const getCategories = async () => {
     try {
-      const res = await axios.get("/services");
+      const res = await axios.get("/categoryAndServiceList");
       dispatch({ type: GET_CATEGORIES, payload: res.data });
     } catch (error) {
       console.log(error.message);
@@ -106,7 +106,7 @@ const OrderState = props => {
   //Get makes
   const getMakes = async () => {
     try {
-      const res = await axios.get(`/makes`);
+      const res = await axios.get(`/vehicle`);
       dispatch({ type: GET_MAKES, payload: res.data });
     } catch (error) {
       console.log(error.message);
@@ -115,7 +115,7 @@ const OrderState = props => {
   //Get models
   const getModels = async id => {
     try {
-      const res = await axios.get(`/makes/${id}`);
+      const res = await axios.get(`/vehicle/${id}`);
       dispatch({ type: GET_MODELS, payload: res.data });
     } catch (error) {
       console.log(error.message);
