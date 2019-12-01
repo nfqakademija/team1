@@ -5,7 +5,6 @@ import OrderReducer from "./orderReducer";
 import {
   GET_MODELS,
   GET_MAKES,
-  CREATE_ORDER,
   ADD_SERVICE,
   REMOVE_SERVICE,
   GET_CATEGORIES,
@@ -78,7 +77,7 @@ const OrderState = props => {
     //test
     console.log(orderData);
     try {
-      const res = await axios.post("/api/order", orderData, config);
+      const res = await axios.post("/order", orderData, config);
     } catch (error) {
       console.log(error.message);
     }
@@ -86,7 +85,7 @@ const OrderState = props => {
   //Get Categories
   const getCategories = async () => {
     try {
-      const res = await axios.get("/api/services");
+      const res = await axios.get("/services");
       dispatch({ type: GET_CATEGORIES, payload: res.data });
     } catch (error) {
       console.log(error.message);
@@ -95,7 +94,7 @@ const OrderState = props => {
   //Get Services
   const getServices = async categoryID => {
     try {
-      const res = await axios.get(`/api/services/${categoryID}`);
+      const res = await axios.get(`/services/${categoryID}`);
       dispatch({ type: GET_SERVICES, payload: res.data });
     } catch (error) {
       console.log(error.message);
@@ -111,11 +110,21 @@ const OrderState = props => {
   };
   //Get makes
   const getMakes = async () => {
-    console.log("Makes");
+    try {
+      const res = await axios.get(`/makes`);
+      dispatch({ type: GET_MAKES, payload: res.data });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   //Get models
   const getModels = async id => {
-    console.log("Models");
+    try {
+      const res = await axios.get(`/makes/${id}`);
+      dispatch({ type: GET_MODELS, payload: res.data });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <OrderContext.Provider

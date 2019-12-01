@@ -1,7 +1,6 @@
 import {
   GET_MODELS,
   GET_MAKES,
-  CREATE_ORDER,
   ADD_SERVICE,
   REMOVE_SERVICE,
   GET_CATEGORIES,
@@ -18,12 +17,12 @@ export default (state, action) => {
     case GET_MODELS:
       return {
         ...state,
-        categories: state.models
+        categories: action.payload.models
       };
     case GET_MAKES:
       return {
         ...state,
-        categories: state.makes
+        categories: action.payload.makes
       };
     case GET_SERVICES:
       return {
