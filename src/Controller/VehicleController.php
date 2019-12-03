@@ -40,7 +40,7 @@ class VehicleController extends AbstractController
     {
         $models = $this->getDoctrine()
             ->getRepository(VehicleModel::class)
-            ->findBy(['fkVehicleMake' => $make_id]);
+            ->findModelByMakeId($make_id);
 
         if (!$models) {
             return $this->json(['error' => 'No models could be found by this make.', 404]);
