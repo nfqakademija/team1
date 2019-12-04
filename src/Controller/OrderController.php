@@ -19,6 +19,16 @@ use App\Entity\User;
 
 class OrderController extends AbstractController
 {
+
+    /**
+     * @Route("/order", name="order")
+     */
+    public function index()
+    {
+        return $this->render('order/index.html.twig', [
+            'someVariable' => 'Ordering Page',
+        ]);
+    }
     /**
      * @param Request $request
      * @return Response

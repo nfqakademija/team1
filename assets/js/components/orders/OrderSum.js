@@ -19,9 +19,9 @@ function OrderSum() {
       ) : (
         <div></div>
       )}
-      <h3 className="text-center">
+      <h4 className="text-center">
         Full price of your order is {Number(price).toFixed(2)} Eur
-      </h3>
+      </h4>
     </div>
   );
 }
