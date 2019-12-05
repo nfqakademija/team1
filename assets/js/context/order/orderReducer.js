@@ -12,22 +12,22 @@ export default (state, action) => {
     case GET_CATEGORIES:
       return {
         ...state,
-        categories: action.payload.categories
+        categories: state.categories
       };
     case GET_MODELS:
       return {
         ...state,
-        categories: action.payload.models
+        categories: state.models
       };
     case GET_MAKES:
       return {
         ...state,
-        categories: action.payload.makes
+        categories: state.makes
       };
     case GET_SERVICES:
       return {
         ...state,
-        services: action.payload.categories.find(
+        services: state.categories.find(
           category => category.id === action.payload
         ).services
       };

@@ -20,7 +20,7 @@ export default function SpacingGrid() {
   const { getCategories, categories } = servicesContext;
 
   useEffect(() => {
-    getCategories();
+    //getCategories();
     //eslint-disable-next-line
   }, []);
 

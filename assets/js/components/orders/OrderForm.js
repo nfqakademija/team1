@@ -68,7 +68,12 @@ const OrderForm = () => {
       <Alert />
       <div className="form-group">
         <label htmlFor="make">Car Make:</label>
-        <select name="make" value={make} onChange={onChange}>
+        <select
+          name="make"
+          value={make}
+          onChange={onChange}
+          style={{ display: "block" }}
+        >
           <option value=""></option>
           {makes.map(make => (
             <option key={make.id} value={make.name}>
@@ -79,7 +84,12 @@ const OrderForm = () => {
       </div>
       <div className="form-group">
         <label htmlFor="model">Car Model:</label>
-        <select name="model" value={model} onChange={onChange}>
+        <select
+          name="model"
+          value={model}
+          onChange={onChange}
+          style={{ display: "block" }}
+        >
           <option value=""></option>
           {models.map(model => (
             <option key={model.id} value={model.name}>
@@ -105,7 +115,12 @@ const OrderForm = () => {
       </div>
       <div className="form-group">
         <label htmlFor="gearbox">Gearbox Type:</label>
-        <select name="gearbox" value={gearbox} onChange={onChange}>
+        <select
+          name="gearbox"
+          value={gearbox}
+          onChange={onChange}
+          style={{ display: "block" }}
+        >
           <option value=""></option>
           <option value="automatic">Automatic</option>
           <option value="manual">Manual</option>
@@ -161,10 +176,11 @@ const OrderForm = () => {
         <label htmlFor="comment">Additional Comments:</label>
         <textarea
           name="comment"
-          rows="5"
+          rows="7"
           value={comment}
           placeholder="Comment...(optional)"
           onChange={onChange}
+          style={{ height: "auto" }}
         />
       </div>
       <div>
