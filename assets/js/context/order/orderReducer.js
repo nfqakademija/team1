@@ -12,17 +12,17 @@ export default (state, action) => {
     case GET_CATEGORIES:
       return {
         ...state,
-        categories: state.categories
+        categories: action.payload.categories
       };
     case GET_MODELS:
       return {
         ...state,
-        categories: state.models
+        models: action.payload.models
       };
     case GET_MAKES:
       return {
         ...state,
-        categories: state.makes
+        makes: action.payload.makes
       };
     case GET_SERVICES:
       return {

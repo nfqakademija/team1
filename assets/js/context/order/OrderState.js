@@ -74,8 +74,6 @@ const OrderState = props => {
       }
     };
     orderData.services = state.selectedServices;
-    //test
-    console.log(orderData);
     try {
       const res = await axios.post("/order", orderData, config);
     } catch (error) {

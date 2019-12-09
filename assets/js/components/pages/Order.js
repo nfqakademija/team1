@@ -5,7 +5,7 @@ import OrderSum from "../orders/OrderSum";
 
 const Order = () => {
   return (
-    <div className="container">
+    <div className="container" style={{ width: "85%" }}>
       <CardGrid />
       <div className="grid-2 my-3">
         <div>

@@ -11,6 +11,11 @@ const useStyles = makeStyles(theme => ({
   },
   control: {
     padding: theme.spacing(2)
+  },
+  card: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary
   }
 }));
 
@@ -20,7 +25,7 @@ export default function SpacingGrid() {
   const { getCategories, categories } = servicesContext;
 
   useEffect(() => {
-    //getCategories();
+    getCategories();
     //eslint-disable-next-line
   }, []);
 
@@ -28,16 +33,14 @@ export default function SpacingGrid() {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="center" spacing={spacing}>
-          {categories.map(value => (
-            <Grid key={value.id} item>
-              <Card category={value} />
-            </Grid>
-          ))}
-        </Grid>
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        {categories.map(value => (
+          <Grid key={value.id} item xs>
+            <Card category={value} />
+          </Grid>
+        ))}
       </Grid>
-    </Grid>
+    </div>
   );
 }
