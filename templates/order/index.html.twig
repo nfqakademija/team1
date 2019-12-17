@@ -5,6 +5,7 @@
 {% block body %}
     <div id="root">Loading...</div>
     {% block javascripts %}
+        {{ parent() }}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 {% endblock %}

@@ -45,7 +45,7 @@ export default function RecipeReviewCard({ category }) {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} style={{ minWidth: "240px" }}>
       <CardHeader title={category.name} />
       <CardMedia
         className={classes.media}
@@ -54,7 +54,7 @@ export default function RecipeReviewCard({ category }) {
       ></CardMedia>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {category.description}
+          {category.summary}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

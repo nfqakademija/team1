@@ -9,7 +9,7 @@ const OrderForm = () => {
   const alertContext = useContext(AlertContext);
 
   const { setAlert } = alertContext;
-  const { createOrder, getMakes, getModels, makes, models } = orderContext;
+  const { submitOrder, getMakes, getModels, makes, models } = orderContext;
 
   const [order, setOrder] = useState({
     make: "",
@@ -25,13 +25,16 @@ const OrderForm = () => {
 
   useEffect(() => {
     getMakes();
-    getModels();
     //eslint-disable-next-line
   }, []);
 
   const { make, model, power, gearbox, displacement, ecu, comment } = order;
   const [selectedDate, handleDateChange] = useState(new Date());
+
   const onChange = e => {
+    if (e.target.name === "make") {
+      getModels(e.target.value);
+    }
     if (e.target.name === "file") {
       setOrder({ ...order, [e.target.name]: e.target.files[0] });
       setFilename(e.target.files[0].name);
@@ -58,7 +61,7 @@ const OrderForm = () => {
       setAlert("Manufactoring year must be a valid value", "danger");
     } else {
       //send add contact request
-      createOrder(order);
+      submitOrder(order);
     }
   };
 
@@ -75,9 +78,9 @@ const OrderForm = () => {
           style={{ display: "block" }}
         >
           <option value=""></option>
-          {makes.map(make => (
-            <option key={make.id} value={make.name}>
-              {make.name}
+          {makes.map(making => (
+            <option key={making.id} value={making.id}>
+              {making.make}
             </option>
           ))}
         </select>
@@ -92,8 +95,8 @@ const OrderForm = () => {
         >
           <option value=""></option>
           {models.map(model => (
-            <option key={model.id} value={model.name}>
-              {model.name}
+            <option key={model.id} value={model.id}>
+              {model.model}
             </option>
           ))}
         </select>
