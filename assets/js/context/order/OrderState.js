@@ -15,53 +15,11 @@ const OrderState = props => {
   const initialState = {
     order: {},
     selectedServices: [],
-    makes: [
-      { id: 1, name: "Audi" },
-      { id: 2, name: "BMW" },
-      { id: 3, name: "VW" }
-    ],
-    models: [
-      { id: 1, name: "Passat" },
-      { id: 2, name: "A6" },
-      { id: 3, name: "535D" }
-    ],
+    makes: [],
+    models: [],
     price: 0,
     services: [],
-    categories: [
-      {
-        id: 1,
-        name: "CategoryA",
-        description:
-          "Tuning your ECU is a great way to achieve more performance or fuel economy!",
-        services: [
-          { id: 1, name: "ServiceA", price: 20.21 },
-          { id: 2, name: "ServiceB", price: 999.13 },
-          { id: 3, name: "ServiceC", price: 9.78 }
-        ]
-      },
-      {
-        id: 2,
-        name: "CategoryB",
-        description:
-          "Tuning your ECU is a great way to achieve more performance or fuel economy!",
-        services: [
-          { id: 4, name: "ServiceA", price: 20.21 },
-          { id: 5, name: "ServiceB", price: 999.13 },
-          { id: 6, name: "ServiceC", price: 9.78 }
-        ]
-      },
-      {
-        id: 3,
-        name: "CategoryC",
-        description:
-          "Tuning your ECU is a great way to achieve more performance or fuel economy!",
-        services: [
-          { id: 7, name: "ServiceA", price: 20.21 },
-          { id: 8, name: "ServiceB", price: 999.13 },
-          { id: 9, name: "ServiceC", price: 9.78 }
-        ]
-      }
-    ]
+    categories: []
   };
 
   const [state, dispatch] = useReducer(OrderReducer, initialState);
@@ -75,7 +33,7 @@ const OrderState = props => {
     };
     orderData.services = state.selectedServices;
     try {
-      const res = await axios.post("/order", orderData, config);
+      await axios.post("/order", orderData, config);
     } catch (error) {
       console.log(error.message);
     }
