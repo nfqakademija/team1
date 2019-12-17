@@ -81,13 +81,14 @@ class OrderController extends AbstractController
 
     private function handleOrder(array $input)
     {
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $order = new Order();
         $orderVehicle = new OrderVehicleData();
         $orderState = new OrderState();
         $repo = $this->getDoctrine()->getRepository(Service::class);
-        $user = $this->getDoctrine()->getRepository(User::class)->find(1);
+        $user = $this->getUser();
+        //$user = $this->getDoctrine()->getRepository(User::class)->find(1); //encase the line above doesn't work
         $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class)->findOneBy(['model' => $input['model']]);
 
 
