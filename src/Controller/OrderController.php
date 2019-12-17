@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Service;
+use App\Entity\VehicleEcuFile;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,8 +44,11 @@ class OrderController extends AbstractController
         if (0 !== count($violations)) {
             $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
         } else {
-            $this->handleOrder($content);
-            $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
+            if($this->handleOrder($content)){
+                $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
+            } else {
+                $response = $this->json(['message' => 'File upload failed.'], Response::HTTP_EXPECTATION_FAILED);
+            }
         }
         return $response;
     }
@@ -110,6 +115,21 @@ class OrderController extends AbstractController
         $order->setComment($input['comment']);
         $order->setFkOrderVehicleData($orderVehicle);
         $order->setFkUser($user);
+
+        $fileHash = $this->handleFileUpload($input['file']);
+        if($fileHash === null)
+        {
+            return false;
+        }
+        $file = new VehicleEcuFile();
+        $file->setFilename($input['file']['name']);
+        $file->setHash($fileHash);
+        $file->setType('TYPE_NEW');
+        $file->addFkOrder($order);
+
+        $order->addFkVehicleEcuFile($file);
+
+        $em->persist($file);
         $em->persist($order);
 
         $orderState->setState('nemodifikuotas');
@@ -118,7 +138,36 @@ class OrderController extends AbstractController
 
         $em->flush();
 
+        return true;
+    }
 
+    private function handleFileUpload($file, FileUploader $fileUploader)
+    {
+        if($file)
+        {
+            $file_name = $file['name'];
+            $file_ext=strtolower(end(explode('.',$file['name'])));
+
+            $extensions= array("zip");
+
+            if($file_name === null || $file_name == '')
+            {
+                return null;
+            }
+
+            if(in_array($file_ext,$extensions)=== false){
+                return null;
+            }
+
+            $hash = $fileUploader->upload($file);
+
+            if($hash != null)
+            {
+                return $hash;
+            }
+
+            return $hash;
+        }
     }
 
 }
