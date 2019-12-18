@@ -37,26 +37,30 @@ class OrderController extends AbstractController
      */
     public function submit(Request $request)
     {
-        die("dead");
-        $content = $request->request->all();
-        $violations = $this->validate($content);
 
-        if (0 !== count($violations)) {
-            $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
-        } else {
+        $content = $request->request->all();
+        //$violations = $this->validate($content);
+
+        //if (0 !== count($violations)) {
+         //   $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
+        //}
+        //else {
+            die("dead");
             if($this->handleOrder($content)){
+
                 $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
             } else {
                 $response = $this->json(['message' => 'File upload failed.'], Response::HTTP_EXPECTATION_FAILED);
             }
-        }
+        //}
         return $response;
     }
 
-    private function validate(array $input): array
+    private function validate(array $input)
     {
 
         $validator = Validation::createValidator();
+
         $constraint = new Assert\Collection([
             // the keys correspond to the keys in the input array
             'services' => new Assert\Type('array'),
@@ -80,7 +84,6 @@ class OrderController extends AbstractController
         ]);
 
         $violations = $validator->validate($input, $constraint);
-
         return $violations;
     }
 
@@ -132,7 +135,7 @@ class OrderController extends AbstractController
         $em->persist($file);
         $em->persist($order);
 
-        $orderState->setState('nemodifikuotas');
+        $orderState->setState('OPEN');
         $orderState->setFkOrder($order);
         $em->persist($orderState);
 
