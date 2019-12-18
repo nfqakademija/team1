@@ -18,7 +18,7 @@ export default function CheckboxesGroup({ categoryID }) {
   const {
     addService,
     getServices,
-    services,
+    categories,
     selectedServices,
     removeService
   } = orderContext;
@@ -42,25 +42,32 @@ export default function CheckboxesGroup({ categoryID }) {
     <div className={classes.root}>
       <form>
         <FormLabel component="legend">Choose a service to order</FormLabel>
-        {services.map(service => (
-          <div key={service.id}>
-            <Checkbox
-              name="serviceCheckbox"
-              value={service.name}
-              onChange={() => onChange(service)}
-            />
-            {service.name}
-            <div
-              style={{
-                marginLeft: "16px",
-                marginBottom: "0.5rem",
-                display: "inline-flex"
-              }}
-            >
-              {service.price} Eur
+        {categories
+          .find(category => category.id == categoryID)
+          .services.map(service => (
+            <div key={service.id}>
+              <p>
+                <label className="black-text">
+                  <input
+                    type="checkbox"
+                    name="serviceCheckbox"
+                    value={service}
+                    onChange={() => onChange(service)}
+                  />
+                  <span>{service.name}</span>
+                  <span
+                    style={{
+                      marginLeft: "26px",
+                      display: "inline-flex",
+                      fontSize: "1.25rem"
+                    }}
+                  >
+                    {service.price} Eur
+                  </span>
+                </label>
+              </p>
             </div>
-          </div>
-        ))}
+          ))}
       </form>
     </div>
   );

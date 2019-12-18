@@ -26,21 +26,26 @@
         <a id="logo-container" href="#" class="brand-logo">Team1</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">Home</a></li>
-            <li><a href="/order">Services</a></li>
             {% if not is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                 <li><a href="/login">Log In</a></li>
                 <li><a href="/register">Register</a></li>
             {% endif %}
             {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                <li><a href="/order">Services</a></li>
                 <li><a href="/logout">Logout</a></li>
             {% endif %}
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
             <li><a href="/">Home</a></li>
-            <li><a href="/services">Services</a></li>
-            <li><a href="/login">Log In</a></li>
-            <li><a href="/register">Register</a></li>
+            {% if not is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                <li><a href="/login">Log In</a></li>
+                <li><a href="/register">Register</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                <li><a href="/order">Services</a></li>
+                <li><a href="/logout">Logout</a></li>
+            {% endif %}
         </ul>
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"
         ><i class="material-icons">menu</i></a
@@ -55,29 +60,18 @@
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
-                <h5 class="white-text">Company Bio</h5>
+                <h5 class="white-text">Working hours</h5>
                 <p class="grey-text text-lighten-4">
-                    We are a team of college students working on this project like
-                    it's our full time job. Any amount would help support and continue
-                    development on this project and is greatly appreciated.
+                    Working hours - Everyday from 9:00-18:00 EET, from 10:00 to 14:00 on Saturday.
                 </p>
             </div>
             <div class="col l3 s12">
-                <h5 class="white-text">Settings</h5>
-                <ul>
-                    <li><a class="white-text" href="#!">Link 1</a></li>
-                    <li><a class="white-text" href="#!">Link 2</a></li>
-                    <li><a class="white-text" href="#!">Link 3</a></li>
-                    <li><a class="white-text" href="#!">Link 4</a></li>
-                </ul>
             </div>
             <div class="col l3 s12">
-                <h5 class="white-text">Connect</h5>
+                <h5 class="white-text">Connect with us</h5>
                 <ul>
-                    <li><a class="white-text" href="#!">Link 1</a></li>
-                    <li><a class="white-text" href="#!">Link 2</a></li>
-                    <li><a class="white-text" href="#!">Link 3</a></li>
-                    <li><a class="white-text" href="#!">Link 4</a></li>
+                    <li>Email: <a class="white-text" href="#!">vb.fileservice@gmail.com</a></li>
+                    <li>Skype: <a class="white-text" href="#!">vb.fileservice@gmail.com</a></li>
                 </ul>
             </div>
         </div>

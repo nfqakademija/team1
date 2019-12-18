@@ -23,7 +23,7 @@ class OrderController extends AbstractController
 {
 
     /**
-     * @Route("/order", name="order")
+     * @Route("/orderView", name="order")
      */
     public function index()
     {
@@ -37,8 +37,8 @@ class OrderController extends AbstractController
      */
     public function submit(Request $request)
     {
+        die("dead");
         $content = $request->request->all();
-
         $violations = $this->validate($content);
 
         if (0 !== count($violations)) {
@@ -94,7 +94,7 @@ class OrderController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Service::class);
         $user = $this->getUser();
         //$user = $this->getDoctrine()->getRepository(User::class)->find(1); //encase the line above doesn't work
-        $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class)->findOneBy(['model' => $input['model']]);
+        $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class)->findOneBy(['idVehicleModel' => $input['model']]);
 
 
         $priceSum = 0;
