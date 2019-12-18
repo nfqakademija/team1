@@ -38,21 +38,23 @@ class OrderController extends AbstractController
     public function submit(Request $request)
     {
 
-        $content = $request->request->all();
-        //$violations = $this->validate($content);
+        $content = $request->getContent();
+        $content = json_decode($content, true);
 
-        //if (0 !== count($violations)) {
-         //   $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
-        //}
-        //else {
-            die("dead");
+        $violations = $this->validate($content);
+
+        if (0 !== count($violations)) {
+            $response = $this->json($violations, Response::HTTP_EXPECTATION_FAILED);
+        }
+        else {
+
             if($this->handleOrder($content)){
 
                 $response = $this->json(['message' => 'Success!'], Response::HTTP_OK);
             } else {
                 $response = $this->json(['message' => 'File upload failed.'], Response::HTTP_EXPECTATION_FAILED);
             }
-        //}
+        }
         return $response;
     }
 
@@ -66,8 +68,8 @@ class OrderController extends AbstractController
             'services' => new Assert\Type('array'),
             'year' => new Assert\Type('int'),
             'make' => [
-                new Assert\Length(['max' => 45]),
-                new Assert\Length(['min' => 10])
+                new Assert\Length(['max' => 50]),
+                new Assert\Length(['min' => 1])
             ],
             'model' => [
                 new Assert\Length(['max' => 45]),
@@ -89,14 +91,15 @@ class OrderController extends AbstractController
 
     private function handleOrder(array $input)
     {
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $em = $this->getDoctrine()->getManager();
         $order = new Order();
         $orderVehicle = new OrderVehicleData();
         $orderState = new OrderState();
         $repo = $this->getDoctrine()->getRepository(Service::class);
         $user = $this->getUser();
-        //$user = $this->getDoctrine()->getRepository(User::class)->find(1); //encase the line above doesn't work
         $vehicleModel = $this->getDoctrine()->getRepository(VehicleModel::class)->findOneBy(['idVehicleModel' => $input['model']]);
 
 
@@ -114,12 +117,15 @@ class OrderController extends AbstractController
         $orderVehicle->setFkVehicleModel($vehicleModel);
         $em->persist($orderVehicle);
 
+
         $order->setPriceTotal($priceSum);
         $order->setComment($input['comment']);
         $order->setFkOrderVehicleData($orderVehicle);
         $order->setFkUser($user);
 
+        /*
         $fileHash = $this->handleFileUpload($input['file']);
+
         if($fileHash === null)
         {
             return false;
@@ -131,15 +137,24 @@ class OrderController extends AbstractController
         $file->addFkOrder($order);
 
         $order->addFkVehicleEcuFile($file);
+        */
 
-        $em->persist($file);
+        //$em->persist($file);
+
         $em->persist($order);
 
         $orderState->setState('OPEN');
+
         $orderState->setFkOrder($order);
+
         $em->persist($orderState);
 
-        $em->flush();
+
+        try {
+            $em->flush();
+        } catch (\Exception $e) {
+            print $e->getMessage();
+        }
 
         return true;
     }
